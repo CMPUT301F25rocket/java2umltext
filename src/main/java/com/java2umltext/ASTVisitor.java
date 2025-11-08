@@ -131,9 +131,10 @@ public class ASTVisitor extends VoidVisitorAdapter<UML> {
             MethodWrapper mw = new MethodWrapper(
                 v, cd.isStatic(), cd.isAbstract(), cw.name(), cd.getNameAsString());
             cw.methods().add(mw);
-            
+
             for (Parameter parameter : cd.getParameters()) {
                 mw.parameters().add(parameter.getTypeAsString());
+                mw.parameterNames().add(parameter.getNameAsString());
             }
         }
     }
@@ -152,11 +153,12 @@ public class ASTVisitor extends VoidVisitorAdapter<UML> {
             MethodWrapper mw = new MethodWrapper(
                 v, md.isStatic(), md.isAbstract(), md.getTypeAsString(), md.getNameAsString());
             cw.methods().add(mw);
-            
+
             for (Parameter parameter : md.getParameters()) {
                 mw.parameters().add(parameter.getTypeAsString());
+                mw.parameterNames().add(parameter.getNameAsString());
             }
-            
+
             if (config.showMethodRelationships) {
                 addRelationship("..", md.getType(), cw);
                 for (Parameter parameter : md.getParameters()) {

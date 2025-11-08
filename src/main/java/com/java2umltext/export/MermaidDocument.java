@@ -40,20 +40,27 @@ public class MermaidDocument extends Document {
         
         str += cw.fields().isEmpty() ? "" : "\n" +
             cw.fields().stream()
-            .map(f -> f.visibility().symbol() + " " 
-                +(f.type().isBlank() ? "" : f.type().replaceAll("[<>]", "~") + " ")
+            .map(f -> f.visibility().symbol()
                 + f.name()
-                + (f.isStatic() ? "$" : ""))
+                + (f.isStatic() ? "$" : "")
+                + (f.type().isBlank() ? "" : ": " + f.type().replaceAll("[<>]", "~")))
             .collect(Collectors.joining("\n"));
         
         str += cw.methods().isEmpty() ? "" : "\n" +
             cw.methods().stream()
-            .map(m -> m.visibility().symbol() + " " 
-                + m.returnType().replaceAll("[<>]", "~") + " "
-                + m.name()
-                + "(" + m.parameters().stream().map(p -> p.replaceAll("[<>]", "~")).collect(Collectors.joining(",")) + ")"
-                + (m.isAbstract() ? "*" : "")
-                + (m.isStatic() ? "$" : ""))
+            .map(m -> {
+                String params = "";
+                for (int i = 0; i < m.parameters().size(); i++) {
+                    if (i > 0) params += ", ";
+                    params += m.parameterNames().get(i) + ": " + m.parameters().get(i).replaceAll("[<>]", "~");
+                }
+                return m.visibility().symbol()
+                    + m.name()
+                    + (m.isStatic() ? "$" : "")
+                    + (m.isAbstract() ? "*" : "")
+                    + "(" + params + ")"
+                    + " " + m.returnType().replaceAll("[<>]", "~");
+            })
             .collect(Collectors.joining("\n"));
 
         str += "\n}\n";

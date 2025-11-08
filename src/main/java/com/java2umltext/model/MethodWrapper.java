@@ -8,9 +8,10 @@ public record MethodWrapper(
     boolean isAbstract,
     String returnType,
     String name,
-    ArrayList<String> parameters
-) implements UML { 
+    ArrayList<String> parameters,
+    ArrayList<String> parameterNames
+) implements UML {
     public MethodWrapper(Visibility visibility, boolean isStatic, boolean isAbstract, String returnType, String name) {
-        this(visibility, isStatic, isAbstract, returnType, name, new ArrayList<>());
+        this(visibility, isStatic, isAbstract, returnType, name, new ArrayList<>(), new ArrayList<>());
     }
 }
