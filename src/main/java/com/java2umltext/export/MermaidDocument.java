@@ -42,8 +42,8 @@ public class MermaidDocument extends Document {
             cw.fields().stream()
             .map(f -> f.visibility().symbol()
                 + f.name()
-                + (f.isStatic() ? "$" : "")
-                + (f.type().isBlank() ? "" : ": " + f.type().replaceAll("[<>]", "~")))
+                + (f.type().isBlank() ? "" : ": " + f.type().replaceAll("[<>]", "~"))
+                + (f.isStatic() ? "$" : ""))
             .collect(Collectors.joining("\n"));
         
         str += cw.methods().isEmpty() ? "" : "\n" +
@@ -56,10 +56,10 @@ public class MermaidDocument extends Document {
                 }
                 return m.visibility().symbol()
                     + m.name()
-                    + (m.isStatic() ? "$" : "")
-                    + (m.isAbstract() ? "*" : "")
                     + "(" + params + ")"
-                    + " " + m.returnType().replaceAll("[<>]", "~");
+                    + " " + m.returnType().replaceAll("[<>]", "~")
+                    + (m.isAbstract() ? "*" : "")
+                    + (m.isStatic() ? "$" : "");
             })
             .collect(Collectors.joining("\n"));
 

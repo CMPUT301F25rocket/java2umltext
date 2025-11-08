@@ -40,8 +40,8 @@ class MermaidDocumentTest {
 
         String export = document.export();
         assertTrue(export.contains("class Person {"));
-        assertTrue(export.contains("- String name"));
-        assertTrue(export.contains("+ String getName()"));
+        assertTrue(export.contains("-name: String"));
+        assertTrue(export.contains("+getName() String"));
     }
 
     @Test
@@ -94,7 +94,7 @@ class MermaidDocumentTest {
         cw.fields().add(new FieldWrapper(Visibility.PUBLIC, true, "int", "count"));
 
         String export = document.export();
-        assertTrue(export.contains("+ int count$"));
+        assertTrue(export.contains("+count: int$"));
     }
 
     @Test
@@ -103,7 +103,7 @@ class MermaidDocumentTest {
         cw.methods().add(new MethodWrapper(Visibility.PUBLIC, true, false, "void", "helper"));
 
         String export = document.export();
-        assertTrue(export.contains("+ void helper()$"));
+        assertTrue(export.contains("+helper() void$"));
     }
 
     @Test
@@ -112,7 +112,7 @@ class MermaidDocumentTest {
         cw.methods().add(new MethodWrapper(Visibility.PUBLIC, false, true, "void", "abstractMethod"));
 
         String export = document.export();
-        assertTrue(export.contains("+ void abstractMethod()*"));
+        assertTrue(export.contains("+abstractMethod() void*"));
     }
 
     @Test
